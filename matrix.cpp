@@ -1,6 +1,7 @@
 #include "matrix.hpp"
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 
 // implementation of functions declared in matrix.hpp goes here
 // function definitions for a class have their names prefixed with
@@ -53,6 +54,40 @@ int Matrix::get_size() const{
     return data.size();
 }
 
+int Matrix::sum_diagonal_major() const {
+    int sum = 0;
+    int N = get_size();
+    for (int i = 0; i < N; i++) {
+        sum += data[i][i];
+    }
+    return sum;
+};
+
+int Matrix::sum_diagonal_minor() const {
+    int sum = 0;
+    int N = get_size();
+    for (int i = 0; i < N; i++) {
+        sum += data[i][N - i - 1];
+    }
+    return sum;
+};
+    
+void Matrix::swap_rows(std::size_t r1, std::size_t r2){
+    std::swap(data[r1], data[r2]);
+};
+    
+void Matrix::swap_cols(std::size_t c1, std::size_t c2){
+    int N = get_size();
+    for (int i = 0; i < N; i++) {
+        std::swap(data[i][c1], data[i][c2]);
+    }
+};
+
 void Matrix::print_matrix() const {
-    // print out the matrix
+    for (const auto &row : data) {
+        for (int val : row) {
+            std::cout << val << " ";
+        }
+        std::cout << "\n";
+    }
 }
