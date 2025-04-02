@@ -9,6 +9,9 @@
 
 
 Matrix::Matrix(size_t N) { // creates a variable that stores a vector of vectors of ints
+    if (N == 0) {
+        throw std::invalid_argument("Matrix size must be greater than 0.");
+    }
     data.resize(N, std::vector<int>(N, 0)); // initialized an empty vector of vectors of size N with 0 in all places
 }
 
@@ -43,10 +46,16 @@ Matrix Matrix::operator*(const Matrix &rhs) const {
 }
 
 void Matrix::set_value(size_t i, size_t j, int n){
+    if (i >= get_size() || j >= get_size()) {
+        throw std::out_of_range("Index out of bounds.");
+    }
     data[i][j] = n;
 }
 
 int Matrix::get_value(size_t i, size_t j) const{
+    if (i >= get_size() || j >= get_size()) {
+        throw std::out_of_range("Index out of bounds.");
+    }
     return data[i][j];
 }
 
@@ -73,11 +82,18 @@ int Matrix::sum_diagonal_minor() const {
 };
     
 void Matrix::swap_rows(std::size_t r1, std::size_t r2){
+    int N = get_size();
+    if (r1 >= N || r2 >= N) {
+        throw std::out_of_range("Row index out of bounds.");
+    }
     std::swap(data[r1], data[r2]);
 };
     
 void Matrix::swap_cols(std::size_t c1, std::size_t c2){
     int N = get_size();
+    if (c1 >= N || c2 >= N) {
+        throw std::out_of_range("Column index out of bounds.");
+    }
     for (int i = 0; i < N; i++) {
         std::swap(data[i][c1], data[i][c2]);
     }
